@@ -86,7 +86,7 @@ const invoiceSearch = async () =>{
                 </div>
 
                 <div class="table--heading">
-                    <p>ID</p>
+                    <p>IDs</p>
                     <p>Date</p>
                     <p>Number</p>
                     <p>Customer</p>
