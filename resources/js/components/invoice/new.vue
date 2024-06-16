@@ -2,6 +2,7 @@
 
     import { onMounted, ref } from 'vue';
     import axios from "axios";
+    import router from '@/router';
 
     let form = ref([]);
     let getAllCustomer = ref([]);
@@ -80,18 +81,29 @@
     }
 
     // onSave
-    const onSave = () =>{
+    const onSave = async () =>{
         let sub_Total = 0;
         sub_Total = subTotal();
 
         let total = 0;
         total = grandTotal();
 
-        const formData = new FormData();
-        // formData.append('invoice_item',stringify(listCart.value));
-        formData.append('customer_id',customer_id.value);
-        formData.append('date',form.value.date);
-        console.log(formData);
+      const formData = new FormData();
+      formData.append('invoice_item', JSON.stringify(listCart.value));
+      formData.append('customer_id', customer_id.value);
+      formData.append('date', form.value.date);
+      formData.append('due_date', form.value.due_date);
+      formData.append('numero', form.value.numero);
+      formData.append('reference', form.value.reference);
+      formData.append('discount', form.value.discount);
+      formData.append('sub_total', sub_Total);
+      formData.append('total', total);
+      formData.append('terms_conditions', form.value.terms_conditions);
+
+      let res = await axios.post('/api/add_invoice',formData);
+      console.log(res);
+      listCart.value = [];
+      router.push('/');
 
     }
 
