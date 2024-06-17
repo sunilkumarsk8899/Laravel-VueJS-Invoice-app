@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import router from '@/router';
 
 const invoice = ref([]);
 let searchInputInvoice = ref([]);
@@ -32,6 +33,11 @@ const invoiceSearch = async () =>{
     }else{
         getInvoices();
     }
+}
+
+// show
+const onShow = (id) =>{
+    router.push(`/invoice/show/${id}`);
 }
 
 </script>
@@ -86,7 +92,7 @@ const invoiceSearch = async () =>{
                 </div>
 
                 <div class="table--heading">
-                    <p>IDs</p>
+                    <p>ID</p>
                     <p>Date</p>
                     <p>Number</p>
                     <p>Customer</p>
@@ -96,7 +102,7 @@ const invoiceSearch = async () =>{
 
                 <!-- item 1 -->
                 <div class="table--items" v-if="invoice.length > 0" v-for="item in invoice" :key="item.id">
-                    <a href="#" class="table--items--transactionId">#{{ item.id }}</a>
+                    <a href="#" @click="onShow(item.id)" class="table--items--transactionId">#{{ item.id }}</a>
                     <p>{{ item.date }}</p>
                     <p>#{{ item.number }}</p>
                     <p v-if="item.customer.firstname">{{ item.customer.firstname }}</p>

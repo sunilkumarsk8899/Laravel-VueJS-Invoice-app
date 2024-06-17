@@ -47,4 +47,13 @@ class InvoiceController extends Controller
             InvoiceItem::create($itemdata);
         }
     }
+
+    public function show_invoice($id){
+        $data = Invoice::with(['customer','invoice_items.product'])->find($id);
+        return response()->json([
+            'invoice' => $data,
+            'id' => $id
+        ],200);
+    }
+
 }

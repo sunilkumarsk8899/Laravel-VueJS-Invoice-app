@@ -4,6 +4,8 @@ import AddProduct from '../components/AddProduct.vue';
 import invoiceIndex from '../components/invoice/index.vue';
 import NotFound from '../NotFound.vue';
 import invoiceNew from '../components/invoice/new.vue';
+import invoiceShow from '../components/invoice/show.vue';
+// import invoiceShow form '../components/invoice/show.vue';
 
 const routes = [
     {   path: '/',
@@ -16,6 +18,11 @@ const routes = [
     {   path: '/add-product',
         name: 'AddProduct',
         component: AddProduct
+    },
+    {
+        path: '/invoice/show/:id',
+        component: invoiceShow,
+        props:true
     },
     {
         path: '/invoice/new',
