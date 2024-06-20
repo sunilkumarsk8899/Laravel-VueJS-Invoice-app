@@ -30,9 +30,15 @@ onMounted(() => {
   getInvoice();
 });
 
+// print
 const print = () =>{
     window.print();
     router.push('/').catch(()=>{});
+}
+
+// edit
+const onEdit = (id) =>{
+    router.push(`/invoice/edit/${id}`);
 }
 
 </script>
@@ -68,7 +74,7 @@ const print = () =>{
             </li>
             <li>
                 <!-- Select Btn Option -->
-                <button class="selectBtnFlat">
+                <button class="selectBtnFlat" @click="onEdit(form.id)">
                     <i class=" fas fa-reply"></i>
                     Edit
                 </button>

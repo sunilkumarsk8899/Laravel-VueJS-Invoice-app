@@ -6,6 +6,7 @@ import NotFound from '../NotFound.vue';
 import invoiceNew from '../components/invoice/new.vue';
 import invoiceShow from '../components/invoice/show.vue';
 // import invoiceShow form '../components/invoice/show.vue';
+import invoiceEdit from '../components/invoice/edit.vue';
 
 const routes = [
     {   path: '/',
@@ -22,6 +23,11 @@ const routes = [
     {
         path: '/invoice/show/:id',
         component: invoiceShow,
+        props:true
+    },
+    {
+        path: '/invoice/edit/:id',
+        component: invoiceEdit,
         props:true
     },
     {
