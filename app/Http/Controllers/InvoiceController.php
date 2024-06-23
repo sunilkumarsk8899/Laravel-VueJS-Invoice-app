@@ -93,35 +93,35 @@ class InvoiceController extends Controller
 
         $invoice->invoice_items()->delete();
 
- // Assuming you get the JSON string from POST data
- $err = 'nothing error';
-$invoiceitem = $_POST['invoice_items'] ?? null;
+        // Assuming you get the JSON string from POST data
+        $err = 'nothing error';
+        $invoiceitem = $_POST['invoice_items'] ?? null;
 
-if ($invoiceitem) {
-    $decodedItems = json_decode($invoiceitem);
+        if ($invoiceitem) {
+            $decodedItems = json_decode($invoiceitem);
 
-    if (json_last_error() === JSON_ERROR_NONE && (is_array($decodedItems) || is_object($decodedItems))) {
-        foreach ($decodedItems as $item) {
-            if (is_object($item) && isset($item->product_id, $item->quantity, $item->unit_price)) {
-                $itemdata['product_id'] = $item->product_id;
-                $itemdata['invoice_id'] = $invoice->id;
-                $itemdata['quantity'] = $item->quantity;
-                $itemdata['unit_price'] = $item->unit_price;
+            if (json_last_error() === JSON_ERROR_NONE && (is_array($decodedItems) || is_object($decodedItems))) {
+                foreach ($decodedItems as $item) {
+                    if (is_object($item) && isset($item->product_id, $item->quantity, $item->unit_price)) {
+                        $itemdata['product_id'] = $item->product_id;
+                        $itemdata['invoice_id'] = $invoice->id;
+                        $itemdata['quantity'] = $item->quantity;
+                        $itemdata['unit_price'] = $item->unit_price;
 
-                InvoiceItem::create($itemdata);
+                        InvoiceItem::create($itemdata);
+                    } else {
+                        // Handle invalid item structure
+                        $err = "Invalid item structure: " . print_r($item, true);
+                    }
+                }
             } else {
-                // Handle invalid item structure
-                $err = "Invalid item structure: " . print_r($item, true);
+                // Handle JSON decoding error
+                $err = "JSON decoding error: " . json_last_error_msg();
             }
+        } else {
+            // Handle missing invoice_items
+            $err = "Missing invoice_items in POST data";
         }
-    } else {
-        // Handle JSON decoding error
-        $err = "JSON decoding error: " . json_last_error_msg();
-    }
-} else {
-    // Handle missing invoice_items
-    $err = "Missing invoice_items in POST data";
-}
 
 
 

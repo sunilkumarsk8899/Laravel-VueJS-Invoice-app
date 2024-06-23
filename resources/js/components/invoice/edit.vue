@@ -27,6 +27,7 @@
     const getInvoice = async () =>{
         let data = await axios.get(`/api/edit_invoice/${props.id}`);
         form.value = data.data.invoice;
+        console.log(data.data.invoice);
     }
 
 
@@ -108,12 +109,12 @@
             formData.append('discount', form.value.discount);
             formData.append('sub_total', sub_Total);
             formData.append('total', total);
-            formData.append('terms_conditions', form.value.terms_conditions);
+            formData.append('terms_conditions', form.value.terms_and_conditions);
 
             let res = await axios.post(`/api/update_invoice/${form.value.id}`,formData);
             console.log(res);
-            // form.value.invoice_items = [];
-            // router.push('/');
+            form.value.invoice_items = [];
+            router.push('/');
         }
     }
 
@@ -199,7 +200,7 @@
             <div class="table__footer">
                 <div class="document-footer" >
                     <p>Terms and Conditions</p>
-                    <textarea cols="50" rows="7" class="textarea" v-model="form.terms_conditions"></textarea>
+                    <textarea cols="50" rows="7" class="textarea" v-model="form.terms_and_conditions"></textarea>
                 </div>
                 <div>
                     <div class="table__footer--subtotal">
