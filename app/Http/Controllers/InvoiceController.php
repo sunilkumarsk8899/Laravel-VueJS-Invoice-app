@@ -132,8 +132,16 @@ class InvoiceController extends Controller
             'err' => $err
         ]);
         die();
+    }
 
 
+    public function delete_invoice(Request $request){
+        $invoice = Invoice::find($request->input('id'));
+        $invoice->delete();
+        $invoice->invoice_items()->delete();
+        return response()->json([
+            'id' => $request->input('id')
+        ]);
     }
 
 }

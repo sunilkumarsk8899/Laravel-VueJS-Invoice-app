@@ -19,7 +19,7 @@ const getInvoice = async () => {
   try {
     let resp = await axios.get(`/api/show_invoice/${props.id}`);
     form.value = resp.data.invoice;
-    console.log(resp);
+    // console.log(resp);
   } catch (error) {
     console.error("Error fetching invoice data:", error);
   }
@@ -39,6 +39,12 @@ const print = () =>{
 // edit
 const onEdit = (id) =>{
     router.push(`/invoice/edit/${id}`);
+}
+
+// delete
+const onDeleteInvoice = async (id) =>{
+    let resp = await axios.post('/api/delete_invoice/',{id : id});
+    router.push('/');
 }
 
 </script>
@@ -82,7 +88,7 @@ const onEdit = (id) =>{
             </li>
             <li>
                 <!-- Select Btn Option -->
-                <button class="selectBtnFlat ">
+                <button class="selectBtnFlat " @click="onDeleteInvoice(form.id)">
                     <i class=" fas fa-pencil-alt"></i>
                     Delete
                 </button>
